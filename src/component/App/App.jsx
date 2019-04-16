@@ -5,6 +5,8 @@ import Status from '../TimerСontainer/Status';
 import AddTimer from '../TimerСontainer/AddTimer';
 import Timer from '../TimerСontainer/Timer';
 
+import { functionForArrayMap, filtredDoneArray } from '../helpers/utils';
+
 export default class App extends Component {
   id = 0;
 
@@ -17,12 +19,8 @@ export default class App extends Component {
     clearInterval(this.timerId);
   }
 
-  start = () => {
-    this.timerId = setInterval(() => this.tick(), 10);
-  }
-
-  stop = () => {
-    clearInterval(this.timerId);
+  startInterval = () => {
+    this.timerId = setInterval(this.tick, 10);
   }
 
   addTimer = (amount = 1) => {
@@ -31,41 +29,32 @@ export default class App extends Component {
     for (let i = 0; i < amount; i += 1) {
       newArr.push(this.createTimer());
     }
-    this.setState({ timersData: newArr });
+    this.setState(
+      { timersData: newArr },
+      () => {
+        if (!this.timerId) { this.startInterval(); }
+      },
+    );
   };
 
   tick = () => {
     const { timersData } = this.state;
     const newArr = [...timersData];
-    const timerArray = this.functionForArrayMap(newArr);
-    this.setState({ timersData: timerArray });
+    const timerArray = functionForArrayMap(newArr);
+    const filtredArray = filtredDoneArray(timerArray);
+    this.setState({ timersData: filtredArray });
+    if (newArr.length === 0) {
+      clearInterval(this.timerId);
+    }
   };
-
-  functionForArrayMap = array => (
-    array.map((item) => {
-      let { time } = item;
-      let done = false;
-
-      if (time <= 0) {
-        done = true;
-        time = 0;
-      } else {
-        time = (time - 0.01).toFixed(2);
-      }
-
-      return {
-        ...item,
-        done,
-        time,
-      };
-    })
-  );
 
   deleteTimer = (id) => {
     const { timersData } = this.state;
     const idx = timersData.findIndex(el => el.id === id);
     const newArray = [...timersData.slice(0, idx), ...timersData.slice(idx + 1)];
-    this.setState({ timersData: newArray });
+    this.setState(
+      { timersData: newArray },
+    );
   };
 
   createTimer() {
@@ -78,6 +67,7 @@ export default class App extends Component {
     };
   }
 
+
   render() {
     const { timersData, finish } = this.state;
 
@@ -85,8 +75,8 @@ export default class App extends Component {
       <div className="App">
         <h1>Timers</h1>
         <Status data={finish} />
-        <AddTimer addTimer={() => this.addTimer()} />
-        <AddTimer how={10} addTimer={() => this.addTimer(10)} />
+        <AddTimer addTimer={this.addTimer} />
+        <AddTimer how={10} addTimer={this.addTimer} />
         <Timer onDeleted={this.deleteTimer} data={timersData} />
       </div>
     );

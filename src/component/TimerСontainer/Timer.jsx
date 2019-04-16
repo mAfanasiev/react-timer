@@ -3,15 +3,15 @@ import React from 'react';
 import TimerItem from './TimerItem';
 
 const Timer = ({ data, onDeleted }) => {
-  const elements = data.map((item) => {
+  const createTimerItem = ((item) => {
     const { id, done, ...timerProps } = item;
     return (
-      done ? null : <TimerItem onDeleted={() => onDeleted(id)} key={id} id={id} {...timerProps} />
+      <TimerItem onDeleted={() => onDeleted(id)} key={id} id={id} {...timerProps} />
     );
   });
   return (
     <div>
-      {elements}
+      {data.map(createTimerItem)}
     </div>
   );
 };
