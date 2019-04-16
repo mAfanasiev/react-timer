@@ -1,8 +1,8 @@
 import React from 'react';
 
-const AddTimer = ({ addTimer, how }) => (
+const AddTimer = ({ addTimer, how = '' }) => (
   <button type="button" onClick={addTimer}>
-    {`Add Timer ${how || ''} `}
+    {`Add Timer ${how} `}
   </button>
 );
 

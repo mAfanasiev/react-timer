@@ -7,8 +7,7 @@ const TimerItem = ({ id, onDeleted, time }) => (
     </h2>
     <button
       type="button"
-      style={{ cursor: 'pointer' }}
-      onClick={() => onDeleted()}
+      onClick={onDeleted}
     >
       {'X'}
     </button>

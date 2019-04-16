@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import '../../styles/app.scss';
-import Status from '../Timer-container/Status';
-import AddTimer from '../Timer-container/AddTimer';
-import Timer from '../Timer-container/Timer';
+import Status from '../TimerСontainer/Status';
+import AddTimer from '../TimerСontainer/AddTimer';
+import Timer from '../TimerСontainer/Timer';
 
 export default class App extends Component {
   id = 0;
