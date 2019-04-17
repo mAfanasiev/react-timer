@@ -11,12 +11,12 @@ const defaultProps = {
   how: 1,
 };
 
-const AddTimer = ({ addTimer, how = 1 }) => {
+const AddTimer = ({ addTimer, how }) => {
   const onClick = () => addTimer(how);
 
   return (
     <button type="button" onClick={onClick}>
-      {`Add Timer ${how} `}
+      {`Add Timer ${how}`}
     </button>
   );
 };

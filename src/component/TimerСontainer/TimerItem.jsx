@@ -3,24 +3,24 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
   id: PropTypes.number,
-  time: PropTypes.number,
-  onDeleted: PropTypes.func,
+  time: PropTypes.string,
+  onDeletedTimerItem: PropTypes.func,
 };
 
 const defaultProps = {
-  onDeleted: () => {},
-  time: 0,
+  onDeletedTimerItem: () => {},
+  time: '',
   id: 1,
 };
 
-const TimerItem = ({ id, onDeleted, time }) => (
+const TimerItem = ({ id, onDeletedTimerItem, time }) => (
   <div>
     <h2>
       {`Timer ${id}`}
     </h2>
     <button
       type="button"
-      onClick={onDeleted}
+      onClick={onDeletedTimerItem}
     >
       {'X'}
     </button>

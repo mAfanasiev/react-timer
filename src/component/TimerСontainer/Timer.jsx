@@ -7,24 +7,26 @@ const propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     done: PropTypes.bool,
-    time: PropTypes.number,
+    time: PropTypes.string,
   })),
-  onDeleted: PropTypes.func,
+  onDeletedTimerItem: PropTypes.func,
 };
 
 const defaultProps = {
-  onDeleted: () => {},
+  onDeletedTimerItem: () => {},
   data: [],
 };
 
-const Timer = ({ data, onDeleted }) => {
-  console.log(data);
+const Timer = ({ data, onDeletedTimerItem }) => {
   const createTimerItem = ((item) => {
     const { id, done, ...timerProps } = item;
+    const onDeleteHandler = () => onDeletedTimerItem(id);
+
     return (
-      <TimerItem onDeleted={() => onDeleted(id)} key={id} id={id} {...timerProps} />
+      <TimerItem onDeletedTimerItem={onDeleteHandler} key={id} id={id} {...timerProps} />
     );
   });
+
   return (
     <div>
       {data.map(createTimerItem)}

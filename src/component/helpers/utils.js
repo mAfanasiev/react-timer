@@ -1,6 +1,6 @@
-export const filtredDoneArray = array => (array.filter(item => (item.done !== true)));
+export const filtredDoneArray = array => (array.filter(({ done }) => (done !== true)));
 
-export const functionForArrayMap = array => (
+export const functionForArrayMap = (array, func) => (
   array.map((item) => {
     let { time } = item;
     const { id } = item;
@@ -9,7 +9,7 @@ export const functionForArrayMap = array => (
     if (time <= 0) {
       done = true;
       time = 0;
-      console.log(id);
+      func(id);
     } else {
       time = (time - 0.01).toFixed(2);
     }
@@ -20,7 +20,5 @@ export const functionForArrayMap = array => (
     };
   })
 );
-
-export const func = id => id;
 
 export default {};

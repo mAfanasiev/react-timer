@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 
-import '../../styles/app.scss';
 import Status from '../TimerСontainer/Status';
 import AddTimer from '../TimerСontainer/AddTimer';
 import Timer from '../TimerСontainer/Timer';
 
-import { functionForArrayMap, filtredDoneArray, func } from '../helpers/utils';
+import { functionForArrayMap, filtredDoneArray } from '../helpers/utils';
 
 export default class App extends Component {
   id = 0;
@@ -14,6 +13,7 @@ export default class App extends Component {
 
   state = {
     timersData: [],
+    finishTimerId: null,
   }
 
   componentWillUnmount() {
@@ -44,10 +44,12 @@ export default class App extends Component {
     );
   };
 
+  yourFunction = id => this.setState({ finishTimerId: id });
+
   tick = () => {
     const { timersData } = this.state;
     const newArr = [...timersData];
-    const timerArray = functionForArrayMap(newArr);
+    const timerArray = functionForArrayMap(newArr, this.yourFunction);
     const filtredArray = filtredDoneArray(timerArray);
     this.setState({ timersData: filtredArray });
     if (newArr.length === 0) {
@@ -70,21 +72,21 @@ export default class App extends Component {
     return {
       done: false,
       id: idx,
-      time: Math.floor(3 + Math.random() * 8),
+      time: `${Math.floor(3 + Math.random() * 8)}`,
     };
   }
 
 
   render() {
-    const { timersData } = this.state;
+    const { timersData, finishTimerId } = this.state;
 
     return (
       <div className="App">
         <h1>Timers</h1>
-        <Status data={func} />
+        <Status data={finishTimerId} />
         <AddTimer addTimer={this.addTimer} />
         <AddTimer how={10} addTimer={this.addTimer} />
-        <Timer onDeleted={this.deleteTimer} data={timersData} />
+        <Timer onDeletedTimerItem={this.deleteTimer} data={timersData} />
       </div>
     );
   }
