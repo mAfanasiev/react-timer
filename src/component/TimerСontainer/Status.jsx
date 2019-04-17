@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
   data: PropTypes.number,
+  timeFinish: PropTypes.string,
 };
 
 const defaultProps = {
   data: null,
+  timeFinish: null,
 };
 
-const Status = ({ data }) => {
-  const statusText = `Timer №${data} finish at ${Date()}`;
+const Status = ({ data, timeFinish }) => {
+  const statusText = `Timer №${data} finish at ${timeFinish}`;
   return (
     <div>
       {

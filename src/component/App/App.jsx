@@ -14,6 +14,7 @@ export default class App extends Component {
   state = {
     timersData: [],
     finishTimerId: null,
+    timerFinishTime: null,
   }
 
   componentWillUnmount() {
@@ -44,12 +45,12 @@ export default class App extends Component {
     );
   };
 
-  yourFunction = id => this.setState({ finishTimerId: id });
+  idFinishTimer = id => this.setState({ finishTimerId: id, timerFinishTime: Date() });
 
   tick = () => {
     const { timersData } = this.state;
     const newArr = [...timersData];
-    const timerArray = functionForArrayMap(newArr, this.yourFunction);
+    const timerArray = functionForArrayMap(newArr, this.idFinishTimer);
     const filtredArray = filtredDoneArray(timerArray);
     this.setState({ timersData: filtredArray });
     if (newArr.length === 0) {
@@ -78,12 +79,12 @@ export default class App extends Component {
 
 
   render() {
-    const { timersData, finishTimerId } = this.state;
+    const { timersData, finishTimerId, timerFinishTime } = this.state;
 
     return (
       <div className="App">
         <h1>Timers</h1>
-        <Status data={finishTimerId} />
+        <Status data={finishTimerId} timeFinish={timerFinishTime} />
         <AddTimer addTimer={this.addTimer} />
         <AddTimer how={10} addTimer={this.addTimer} />
         <Timer onDeletedTimerItem={this.deleteTimer} data={timersData} />
