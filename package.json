@@ -3,16 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-react-app": "^3.0.8",
     "eslint-plugin-flowtype": "^3.4.2",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.11.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "2.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -27,7 +28,6 @@
     ],
     "rules": {
       "jsx-a11y/no-autofocus": 0,
-      "react/prop-types": 0,
       "linebreak-style": [
         0,
         "error",

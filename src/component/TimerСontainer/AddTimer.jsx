@@ -1,4 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  addTimer: PropTypes.func,
+  how: PropTypes.number,
+};
+
+const defaultProps = {
+  addTimer: () => {},
+  how: 1,
+};
 
 const AddTimer = ({ addTimer, how = 1 }) => {
   const onClick = () => addTimer(how);
@@ -10,4 +21,6 @@ const AddTimer = ({ addTimer, how = 1 }) => {
   );
 };
 
+AddTimer.propTypes = propTypes;
+AddTimer.defaultProps = defaultProps;
 export default AddTimer;

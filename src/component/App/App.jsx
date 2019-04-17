@@ -5,14 +5,15 @@ import Status from '../TimerСontainer/Status';
 import AddTimer from '../TimerСontainer/AddTimer';
 import Timer from '../TimerСontainer/Timer';
 
-import { functionForArrayMap, filtredDoneArray } from '../helpers/utils';
+import { functionForArrayMap, filtredDoneArray, func } from '../helpers/utils';
 
 export default class App extends Component {
   id = 0;
 
+  canRunInterval = true;
+
   state = {
     timersData: [],
-    finish: null,
   }
 
   componentWillUnmount() {
@@ -21,6 +22,12 @@ export default class App extends Component {
 
   startInterval = () => {
     this.timerId = setInterval(this.tick, 10);
+    this.canRunInterval = false;
+  }
+
+  stopInterval = () => {
+    clearInterval(this.timerId);
+    this.canRunInterval = true;
   }
 
   addTimer = (amount = 1) => {
@@ -32,7 +39,7 @@ export default class App extends Component {
     this.setState(
       { timersData: newArr },
       () => {
-        if (!this.timerId) { this.startInterval(); }
+        if (this.canRunInterval) { this.startInterval(); }
       },
     );
   };
@@ -44,7 +51,7 @@ export default class App extends Component {
     const filtredArray = filtredDoneArray(timerArray);
     this.setState({ timersData: filtredArray });
     if (newArr.length === 0) {
-      clearInterval(this.timerId);
+      this.stopInterval();
     }
   };
 
@@ -69,12 +76,12 @@ export default class App extends Component {
 
 
   render() {
-    const { timersData, finish } = this.state;
+    const { timersData } = this.state;
 
     return (
       <div className="App">
         <h1>Timers</h1>
-        <Status data={finish} />
+        <Status data={func} />
         <AddTimer addTimer={this.addTimer} />
         <AddTimer how={10} addTimer={this.addTimer} />
         <Timer onDeleted={this.deleteTimer} data={timersData} />
